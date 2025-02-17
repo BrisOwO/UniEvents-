@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Iniciar Sesion UniEvents+</title>
+    <link rel="stylesheet" href="style.css">
+  
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+</head>
+<body>
+    <div class="wrapper">
+        <form action="login.php" method="POST">
+            <h1>Iniciar sesión</h1>
+
+            <!-- Matrícula (Solo números) -->
+            <div class="input-box">
+                <input type="text" id="matricula" name="matricula" inputmode="numeric" minlength="8" maxlength="8" placeholder="Número de control" required 
+                    oninput="this.value = this.value.replace(/\D/g, '')" 
+                    onkeypress="return soloNumeros(event)">
+                <span class="info-message">Inserta tus 8 caracteres numéricos</span>
+                <span id="error-matricula" class="error-message"></span>
+                <i class='bx bxs-user'></i>
+            </div>
+
+            <!-- Contraseña -->
+            <div class="input-box">
+                <input type="password" id="password" name="password" minlength="8" maxlength="16" placeholder="Contraseña" required>
+                <span id="error-password" class="error-message"></span>
+                <i class='bx bxs-lock-alt'></i>
+            </div>
+
+            <!-- Botón de iniciar sesión -->
+            <button type="submit" id="btnLogin" class="btn">Ingresar</button>
+
+            <div class="registro-link">
+                <p>¿Aún no tienes cuenta? <a href="Registro.html">Regístrate aquí</a></p>
+            </div>
+        </form>
+    </div>
+
+    <style>
+        .error-message {
+            color: white;
+            font-size: 12.5px;
+            display: block;
+            margin-top: 2px;
+        }
+    </style>
+
+    <script>
+        // Función para bloquear la entrada de caracteres no numéricos
+        function soloNumeros(event) {
+            let key = event.key;
+            // Permitir solo números
+            if (!/[0-9]/.test(key)) {
+                event.preventDefault();
+            }
+        }
+
+        document.getElementById("formLogin").addEventListener("submit", function(event) {
+            let matricula = document.getElementById("matricula").value.trim();
+            let password = document.getElementById("password").value.trim();
+            let errorMatricula = document.getElementById("error-matricula");
+            let errorPassword = document.getElementById("error-password");
+
+            let valid = true;
+
+            if (matricula.length !== 8) {
+                errorMatricula.textContent = "La matrícula debe tener 8 números.";
+                valid = false;
+            } else {
+                errorMatricula.textContent = "";
+            }
+
+            if (password === "") {
+                errorPassword.textContent = "Completa este campo.";
+                valid = false;
+            }
+
+            if (!valid) {
+                event.preventDefault();
+            }
+        });
+    </script>
+</body>
+</html>
